@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>九巴到站時間 KMB Bus Arrival Times</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚌</text></svg>">
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <header>
+    <h1 id="app-title">🚌 九巴到站時間</h1>
+    <button id="lang-toggle" class="lang-btn" type="button">EN</button>
+  </header>
+
+  <main class="layout">
+    <!-- Stop list view -->
+    <section id="list-view" class="panel">
+      <div id="location-notice" class="notice hidden"></div>
+
+      <input id="stop-search" type="search" autocomplete="off"
+             placeholder="搜尋車站… 例如 尖沙咀碼頭 / Star Ferry">
+      <ul id="search-results" class="stop-list hidden"></ul>
+
+      <h2 id="subscribed-title">我的車站</h2>
+      <ul id="subscribed-list" class="stop-list"></ul>
+      <p id="no-subscribed" class="empty hidden">暫無訂閱車站。點選車站旁的 ★ 即可加入。</p>
+
+      <h2>
+        <span id="nearby-title">附近車站</span>
+        <small class="radius" id="radius-label">500 米內</small>
+      </h2>
+      <ul id="nearby-list" class="stop-list"></ul>
+    </section>
+
+    <!-- Stop detail view -->
+    <section id="detail-view" class="panel hidden">
+      <button id="back-btn" class="back-btn" type="button">← 返回</button>
+      <div id="detail-body">
+        <div class="detail-title-row">
+          <h2 id="detail-title"></h2>
+          <button id="detail-subscribe" class="star-btn" type="button">☆</button>
+        </div>
+        <p id="detail-updated" class="updated"></p>
+        <div id="eta-status" class="notice"></div>
+        <div id="eta-list"></div>
+      </div>
+    </section>
+  </main>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>
