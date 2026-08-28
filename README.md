@@ -14,7 +14,7 @@ KMB (Kowloon Motor Bus) stops in Hong Kong, backed by the official
   我的車站 / Subscribed stops. Stored in a browser cookie; no account.
 - **Live arrivals** — per stop, every route with its next ETAs; the
   page re-polls every 60 s (upstream data updates every minute).
-- **Duplicate stop codes** — some special routes registers an extra stop
+- **Duplicate stop codes** — some special routes register an extra stop
   with the same code (e.g. 269D at TN507). Such stops appear as a single
   record bound to all of its ids; their arrival lists are merged,
   approaching buses are deduplicated by ETA timestamp, and cards without
@@ -59,9 +59,9 @@ certs/              Self-signed certificate (generated; gitignored)
 requirements.txt    Python dependencies
 ```
 
-Bus data is provided by the Hong Kong Government's
-[data.gov.hk](https://data.gov.hk/sc-data/dataset/hk-td-tis_21-etakmb) (KMB specification and
-data dictionary are available there).
+Bus data is provided via the Hong Kong Government's open data portal
+[data.gov.hk](https://data.gov.hk/sc-data/dataset/hk-td-tis_21-etakmb) (the KMB
+specification and data dictionary are available there).
 
 ## Disclaimer
 
