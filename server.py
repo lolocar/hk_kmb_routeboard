@@ -2,7 +2,8 @@
 
 Serves the static frontend and a small JSON API backed by the
 official eTAPI (https://data.etabus.gov.hk), per the KMB API
-Specification v1.05 and Data Dictionary v1.02 in this repository.
+Specification v1.05 and Data Dictionary v1.02 published with the
+eTAPI service.
 
 - Stop list is cached in memory + data/stops.json and refreshed
   daily at 06:00 (server local time).
