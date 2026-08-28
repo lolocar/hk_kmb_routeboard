@@ -2,7 +2,7 @@
 
 A self-hosted, mobile-first web app that shows live bus arrival times for
 KMB (Kowloon Motor Bus) stops in Hong Kong, backed by the official
-[eTAPI](https://www.etabus.gov.hk/etapi/en/kmb/) transit data service.
+[data.gov.hk](https://data.gov.hk/sc-data/dataset/hk-td-tis_21-etakmb) transit data service.
 
 ## Features
 
@@ -14,8 +14,8 @@ KMB (Kowloon Motor Bus) stops in Hong Kong, backed by the official
   我的車站 / Subscribed stops. Stored in a browser cookie; no account.
 - **Live arrivals** — per stop, every route with its next ETAs; the
   page re-polls every 60 s (upstream data updates every minute).
-- **Duplicate stop codes** — eTAPI sometimes registers one physical stop
-  twice under the same code (e.g. TN507). Such stops appear as a single
+- **Duplicate stop codes** — some special routes registers an extra stop
+  with the same code (e.g. 269D at TN507). Such stops appear as a single
   record bound to all of its ids; their arrival lists are merged,
   approaching buses are deduplicated by ETA timestamp, and cards without
   a live ETA (e.g. a service whose times are not yet published) sort to
@@ -60,5 +60,14 @@ requirements.txt    Python dependencies
 ```
 
 Bus data is provided by the Hong Kong Government's
-[eTAPI](https://www.etabus.gov.hk/etapi/en/kmb/) (KMB specification and
+[data.gov.hk](https://data.gov.hk/sc-data/dataset/hk-td-tis_21-etakmb) (KMB specification and
 data dictionary are available there).
+
+## Disclaimer
+
+This app is intended for **personal use only**. When location services
+(LBS) are enabled, your device's GPS coordinates are sent to the server
+so it can work out nearby stops; the server does not store them, but
+please take care of your own privacy — host the app on a network you
+trust, and use the search box instead of geolocation if you would
+rather not share your position.
