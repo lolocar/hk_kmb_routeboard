@@ -130,12 +130,14 @@ function saveSubscribedCookie() {
 
 // groupIds: all stop ids bound to this physical stop (stop-list results
 // carry "ids"). The subscription is stored under the representative id and
-// any legacy non-representative ids of the group are dropped.
+// any legacy non-representative ids of the group are dropped, so a duplicate
+// stop that is also nearby still appears in Subscribed stops.
 function toggleSubscribed(stopId, groupIds) {
-  const ids = (groupIds && groupIds.length) ? groupIds : [stopId];
+  const rep = (groupIds && groupIds.length) ? groupIds[0] : stopId;
+  const ids = groupIds || [stopId];
   const wasActive = ids.some((id) => subscribed.has(id));
   for (const id of ids) subscribed.delete(id);
-  if (!wasActive) subscribed.add(stopId);
+  if (!wasActive) subscribed.add(rep);
   saveSubscribedCookie();
 }
 

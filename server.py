@@ -402,6 +402,9 @@ async def list_stops(request: Request, lat: float = None, lng: float = None):
         ids = stop_cache.group_ids[stop["id"]]
         if ids[0] != stop["id"]:
             continue  # non-representative record of a grouped stop
+        # Keep nearby and subscribed as independent flags so the same physical
+        # stop (one representative row) can appear in both Nearby stops and
+        # Subscribed stops when it matches both criteria.
         is_subscribed = any(i in subscribed for i in ids)
         if has_location:
             dist = min(haversine_m(lat, lng, stop_cache.stops[i]["lat"],
