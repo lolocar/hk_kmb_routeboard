@@ -264,7 +264,9 @@ function renderStopLists(payload) {
       nearbyUl.appendChild(stopRow(stop));
       nearbyCount++;
     }
-    if (stop.subscribed && !stop.nearby) {
+    // A subscribed stop always appears in "Subscribed stops", even when it is
+    // also listed as a nearby stop (e.g. a duplicate/merged physical stop).
+    if (stop.subscribed) {
       subUl.appendChild(stopRow(stop));
     }
   }
