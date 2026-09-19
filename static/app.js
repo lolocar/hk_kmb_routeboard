@@ -5,6 +5,7 @@
 const COOKIE_NAME = "subscribed_stops";
 const COOKIE_MAX_AGE = 60 * 60 * 24 * 365; // 1 year
 const ETA_POLL_MS = 60 * 1000;             // upstream updates every minute
+const LOCATION_REFRESH_MS = 60 * 1000;     // re-fetch GPS + nearby stops every minute
 const LANG_KEY = "ui_lang";
 
 const $ = (sel) => document.querySelector(sel);
@@ -105,6 +106,7 @@ let currentEtaStopId = null;
 let currentEtaGroupIds = null;
 let etaPollTimer = null;
 let lastLocation = null;   // [lat, lng] once known
+let locationRefreshTimer = null;  // periodic GPS + nearby-stop refresh
 let searchTimer = null;
 let lastSearchQuery = "";
 let lastStopsPayload = null;
@@ -319,8 +321,10 @@ function showGeoError(key, withRetry) {
 
 async function loadStops() {
   const notice = $("#location-notice");
-  notice.className = "notice loading";
-  notice.textContent = t("locating");
+  if (!locationRefreshTimer) {
+    notice.className = "notice loading";
+    notice.textContent = t("locating");
+  }
 
   if (!window.isSecureContext || !navigator.geolocation) {
     showGeoError(geoErrorKey(null), false);
@@ -340,11 +344,22 @@ async function loadStops() {
       }
     },
     (err) => {
-      showGeoError(geoErrorKey(err), true);
-      refreshStopList(null);
+      // First attempt (or retry): show the error. A background refresh
+      // failing is not critical — keep the previous list as is.
+      if (!lastLocation) {
+        showGeoError(geoErrorKey(err), true);
+        refreshStopList(null);
+      }
+      return;
     },
-    { timeout: 15000, maximumAge: 5 * 60 * 1000 }
+    // 0 = always request a fresh fix, so the 60 s refresh actually
+    // reflects movement instead of serving the browser's cached position.
+    { timeout: 15000, maximumAge: 0 }
   );
+
+  if (!locationRefreshTimer) {
+    locationRefreshTimer = setTimeout(loadStops, LOCATION_REFRESH_MS);
+  }
 }
 
 async function refreshStopList(latLng) {
